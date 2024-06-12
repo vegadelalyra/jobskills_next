@@ -19,7 +19,7 @@ interface JobSkillProps {
 const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => {
     const [taskToEdit, setTaskToEdit] = useState<string>(jobSkill.skill)
     const jobSkillId = String(jobSkill._id)
-    const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL + jobSkillId
+    const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL + '/' + jobSkillId
 
     const openEditModal: MouseEventHandler = () => {
         const modal = document.getElementById(

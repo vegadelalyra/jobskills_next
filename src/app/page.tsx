@@ -7,10 +7,10 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
     const [jobSkills, setJobSkills] = useState<IJobSkill[]>([])
+    const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL 
 
     const fetchJobSkills = async () => {
         try {
-            const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL 
             const res = await fetch(url, { cache: 'no-cache' })
 
             if (!res.ok) throw new Error('Failed to fetch job skills')
