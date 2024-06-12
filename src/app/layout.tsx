@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { connectMongoDB } from "@/utils/db";
+import Footer from "./components/Footer";
+;(async () => await connectMongoDB())()
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SIMPLE TODO APP",
-  description: "Simple todo app for learning next js 14",
+  title: "Job Skills",
+  description: "What you need to learn for the job",
 };
 
 export default function RootLayout({
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className + ' flex flex-col items-center'}>{children} <Footer /></body>
     </html>
   );
 }
