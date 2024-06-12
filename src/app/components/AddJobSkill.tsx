@@ -3,36 +3,33 @@
 import React, { FormEventHandler, useState } from 'react'
 import { AiOutlineCoffee } from 'react-icons/ai'
 import Modal from './Modal'
-import { useRouter } from 'next/navigation'
+import { IJobSkill } from '../types/jobSkill'
 
-const AddJobSkill = () => {
-    const router = useRouter()
+interface AddJobSkillProps {
+    onAdd: (newJobSkill: IJobSkill) => void
+}
+
+const AddJobSkill: React.FC<AddJobSkillProps> = ({ onAdd }) => {
     const [newJobSkill, setJobSkill] = useState<string>('')
 
     const openModal = () => {
-        const modal = document.getElementById(
-            'create_modal'
-        ) as HTMLDialogElement | null
+        const modal = document.getElementById('create_modal') as HTMLDialogElement | null
 
         if (modal) modal.showModal()
     }
 
     const closeModal = () => {
-        const modal = document.getElementById(
-            'create_modal'
-        ) as HTMLDialogElement | null
+        const modal = document.getElementById('create_modal') as HTMLDialogElement | null
 
         if (modal) modal.close()
     }
 
-    const handleSubmitNewJobSkill: FormEventHandler<
-        HTMLFormElement
-    > = async e => {
+    const handleSubmitNewJobSkill: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault()
         const url: string = 'http://localhost:3000/api/jobskills'
 
         try {
-            await fetch(url, {
+            const res = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,13 +37,15 @@ const AddJobSkill = () => {
                 body: JSON.stringify({ skill: newJobSkill.toLowerCase() }),
                 cache: 'no-cache'
             })
+
+            const newSkill = await res.json()
+            onAdd(newSkill['job_skill'])
         } catch (error) {
             console.log(error)
         }
 
         setJobSkill('')
         closeModal()
-        router.refresh()
     }
 
     return (

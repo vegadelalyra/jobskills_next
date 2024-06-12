@@ -7,12 +7,12 @@ export async function POST(
     request: NextRequest
 ): Promise<NextResponse<{ message: string }>> {
     const { skill } = await request.json()
-    await JobSkill.create({ skill })
+    const newSkill = await JobSkill.create({ skill })
 
     return NextResponse.json(
         {
             message: 'You have identified a job skill!',
-            job_skill: skill
+            job_skill: newSkill
         },
         { status: 201 }
     )

@@ -2,28 +2,13 @@ import React from 'react'
 import { IJobSkill } from '../types/jobSkill'
 import JobSkill from './JobSkill'
 
-interface ApiResponse {
+interface JobSkillsProps {
     jobSkills: IJobSkill[]
+    onUpdate: (updatedJobSkill: IJobSkill) => void
+    onDelete: (jobSkillId: string) => void
 }
 
-const getJobSkills = async (): Promise<IJobSkill[]> => {
-    try {
-        const url: string = process.env.API_URL
-        const res = await fetch(url, { cache: 'no-cache' })
-
-        if (!res.ok) throw new Error('Failed to fetch job skills')
-
-        const data: ApiResponse = await res.json()
-        return data.jobSkills
-    } catch (error) {
-        console.log('Error loading job skills:', error)
-        return []
-    }
-}
-
-const JobSkills: React.FC = async () => {
-    const jobSkills = await getJobSkills()
-
+const JobSkills: React.FC<JobSkillsProps> = ({ jobSkills, onUpdate, onDelete }) => {
     return (
         <div className='overflow-x-auto'>
             <table className='table'>
@@ -40,6 +25,8 @@ const JobSkills: React.FC = async () => {
                         <JobSkill
                             key={String(jobSkill._id)}
                             jobSkill={jobSkill}
+                            onUpdate={onUpdate}
+                            onDelete={onDelete}
                         />
                     ))}
                 </tbody>

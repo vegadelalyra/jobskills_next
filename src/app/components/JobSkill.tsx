@@ -1,24 +1,22 @@
 'use client'
 
 import React, {
-    EventHandler,
     FormEventHandler,
     MouseEventHandler,
-    SyntheticEvent,
-    useState
+    useState,
 } from 'react'
 import Modal from './Modal'
-import { useRouter } from 'next/navigation'
 import { IJobSkill } from '../types/jobSkill'
 import { ImPlus } from 'react-icons/im'
 import { FaMinus } from 'react-icons/fa'
 
 interface JobSkillProps {
     jobSkill: IJobSkill
+    onUpdate: (updatedJobSkill: IJobSkill) => void
+    onDelete: (jobSkillId: string) => void
 }
 
-const JobSkill: React.FC<JobSkillProps> = ({ jobSkill }) => {
-    const router = useRouter()
+const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => {
     const [taskToEdit, setTaskToEdit] = useState<string>(jobSkill.skill)
     const jobSkillId = String(jobSkill._id)
 
@@ -62,18 +60,19 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill }) => {
         const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
 
         try {
-            await fetch(url, {
+            const res = await fetch(url, {
                 method: 'PATCH',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ skill: taskToEdit })
             })
+            const updatedJobSkill = await res.json()
+            onUpdate(updatedJobSkill["updatedFields"])
         } catch (error) {
             console.log(error)
         }
 
         closeEditModal()
-        router.refresh()
     }
 
     const handleDeleteTodo: FormEventHandler<HTMLFormElement> = async e => {
@@ -82,6 +81,7 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill }) => {
 
         try {
             await fetch(url, { method: 'DELETE' })
+            onDelete(jobSkillId)
         } catch (error) {
             console.log(error)
         }
@@ -89,25 +89,25 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill }) => {
         const modal = document.getElementById(
             `delete_modal_${jobSkillId}`
         ) as HTMLDialogElement | null
+
         if (modal) modal.close()
-        router.refresh()
     }
 
     const handleTaskIncrease: MouseEventHandler<SVGElement> = async () => {
         const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
 
         try {
-            await fetch(url, {
+            const res = await fetch(url, {
                 method: 'PATCH',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ asked: ++jobSkill.asked })
+                body: JSON.stringify({ asked: jobSkill.asked + 1 })
             })
+            const updatedJobSkill = await res.json()
+            onUpdate(updatedJobSkill["updatedFields"])
         } catch (error) {
             console.log(error)
         }
-
-        router.refresh()
     }
 
     const handleTaskDecrease: MouseEventHandler<SVGElement> = async () => {
@@ -116,17 +116,17 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill }) => {
         const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
 
         try {
-            await fetch(url, {
+            const res = await fetch(url, {
                 method: 'PATCH',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ asked: --jobSkill.asked })
+                body: JSON.stringify({ asked: jobSkill.asked - 1 })
             })
+            const updatedJobSkill = await res.json()
+            onUpdate(updatedJobSkill["updatedFields"])
         } catch (error) {
             console.log(error)
         }
-
-        router.refresh()
     }
 
     return (
