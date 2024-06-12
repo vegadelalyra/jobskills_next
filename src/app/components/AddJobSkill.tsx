@@ -11,6 +11,7 @@ interface AddJobSkillProps {
 
 const AddJobSkill: React.FC<AddJobSkillProps> = ({ onAdd }) => {
     const [newJobSkill, setJobSkill] = useState<string>('')
+     const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL
 
     const openModal = () => {
         const modal = document.getElementById('create_modal') as HTMLDialogElement | null
@@ -26,7 +27,6 @@ const AddJobSkill: React.FC<AddJobSkillProps> = ({ onAdd }) => {
 
     const handleSubmitNewJobSkill: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault()
-        const url: string = 'http://localhost:3000/api/jobskills'
 
         try {
             const res = await fetch(url, {

@@ -1,6 +1,6 @@
 // env.d.ts
 namespace NodeJS {
     interface ProcessEnv {
-        API_URL: string
+        NEXT_PUBLIC_JOBSKILLS_API_URL: string
     }
 }

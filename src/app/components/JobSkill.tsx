@@ -19,6 +19,7 @@ interface JobSkillProps {
 const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => {
     const [taskToEdit, setTaskToEdit] = useState<string>(jobSkill.skill)
     const jobSkillId = String(jobSkill._id)
+    const url: string = process.env.NEXT_PUBLIC_JOBSKILLS_API_URL + jobSkillId
 
     const openEditModal: MouseEventHandler = () => {
         const modal = document.getElementById(
@@ -57,8 +58,7 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => 
 
     const handleEditTodo: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault()
-        const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
-
+       
         try {
             const res = await fetch(url, {
                 method: 'PATCH',
@@ -77,7 +77,6 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => 
 
     const handleDeleteTodo: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault()
-        const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
 
         try {
             await fetch(url, { method: 'DELETE' })
@@ -94,8 +93,6 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => 
     }
 
     const handleTaskIncrease: MouseEventHandler<SVGElement> = async () => {
-        const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
-
         try {
             const res = await fetch(url, {
                 method: 'PATCH',
@@ -112,8 +109,6 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => 
 
     const handleTaskDecrease: MouseEventHandler<SVGElement> = async () => {
         if (jobSkill.asked == 0) return
-
-        const url: string = `http://localhost:3000/api/jobskills/${jobSkillId}`
 
         try {
             const res = await fetch(url, {
