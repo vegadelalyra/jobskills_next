@@ -1,3 +1,6 @@
+![Imagen de WhatsApp 2024-06-12 a las 19 18 11_80586cdd](https://github.com/vegadelalyra/jobskills_next/assets/77188420/999fd009-f179-4197-b5bf-28abbb37a766)
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
