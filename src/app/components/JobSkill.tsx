@@ -125,7 +125,7 @@ const JobSkill: React.FC<JobSkillProps> = ({ jobSkill, onUpdate, onDelete }) => 
     }
 
     return (
-        <tr key={jobSkillId} onContextMenu={openDeleteModal}>
+        <tr key={jobSkillId} onContextMenu={openDeleteModal} className="hover-jobskill">
             <td className='w-full'>
                 <span onClick={openEditModal} className='cursor-pointer'>
                     {jobSkill.skill}

@@ -52,10 +52,7 @@ export async function PATCH(
             '[jobskills/[id]/route.ts]: Error patching your job skill!'
         )
 
-    return NextResponse.json(
-        { message: 'Job skill updated successfully', updatedFields: res },
-        { status: 200 }
-    )
+    return NextResponse.json({ updatedFields: res }, { status: 200 })
 }
 
 export async function GET(

@@ -31,6 +31,10 @@ html, body {
   
 }
 
+.hover-jobskill:hover {
+    background-color: rgb(5, 5, 5);
+}
+
 /* For desktop screens and larger */
 @media (min-width: 768px) {
   main {
